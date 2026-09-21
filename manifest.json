@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "anti-gtranslate",
+  "version": "1.0",
+  "description": "disables google search engine auto translate",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "antigtranslate@antigtranslate.com",
+      
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/search*"],
+      "js": ["src/main.js"]
+    }
+  ]
+}
