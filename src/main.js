@@ -1,12 +1,23 @@
-window.onload = (e) => {
-  const buttonSpans = document.querySelectorAll("span").values().filter((span) => span.role == "button");
-  const translateSpans = buttonSpans.filter((span) => span.ariaLabel == null);
+const clicked = new Set();
 
-  let alreadyClicked = [];
-  translateSpans.forEach((s) => {
-    if (alreadyClicked.find((e) => e == s.attributes.jsaction.nodeValue) != undefined) return;
+function clickTranslateButtons() {
+  document.querySelectorAll('span[role="button"]').forEach((s) => {
+    if (s.hasAttribute("aria-label")) return;
 
+    const action = s.getAttribute("jsaction");
+    if (!action || clicked.has(action)) return;
+
+    clicked.add(action);
     s.click();
-    alreadyClicked.push(s.attributes.jsaction.nodeValue);
-  })
+  });
 }
+
+
+let timer;
+const observer = new MutationObserver(() => {
+  clearTimeout(timer);
+  timer = setTimeout(clickTranslateButtons, 200);
+});
+observer.observe(document.documentElement, { childList: true, subtree: true });
+
+clickTranslateButtons();
