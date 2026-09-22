@@ -15,9 +15,12 @@ function clickTranslateButtons() {
 
     clicked.add(action);
 
+    const offset = window.scrollY;
+
     s.click();
+
     setTimeout(() => {
-      scroll({ top: 0, behavior: "instant" });
+      scroll({ top: offset, behavior: "instant" });
     }, 50);
   });
 }
